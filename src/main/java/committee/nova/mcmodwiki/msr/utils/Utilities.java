@@ -1,7 +1,10 @@
 package committee.nova.mcmodwiki.msr.utils;
 
+import committee.nova.mcmodwiki.msr.client.MSRClient;
 import committee.nova.mcmodwiki.msr.core.CoreService;
 import committee.nova.mcmodwiki.msr.mixin.HandledScreenAccessor;
+import mezz.jei.common.Internal;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.*;
@@ -45,6 +48,16 @@ public class Utilities {
             if (slot != null) {
                 final var itemStack = slot.getStack();
                 if (!itemStack.isEmpty()) CoreService.tryOpen(itemStack);
+            }
+        }
+        if (FabricLoader.getInstance().isModLoaded("jei")) {
+            try {
+                final var ingredientType = Internal.getRegisteredIngredients().getIngredientType(ItemStack.class);
+                Internal.getRuntime().ifPresent(r -> {
+                    CoreService.tryOpen(r.getIngredientListOverlay().getIngredientUnderMouse(ingredientType));
+                });
+            } catch (Throwable ex) {
+                MSRClient.LOGGER.warn("Unable to get JEI item.", ex);
             }
         }
     }
