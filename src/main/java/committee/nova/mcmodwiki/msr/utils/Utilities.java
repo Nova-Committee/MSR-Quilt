@@ -51,15 +51,14 @@ public class Utilities {
             }
         }
         if (!FabricLoader.getInstance().isModLoaded("jei")) return;
-        if (Internal.getRuntime().isEmpty()) {
+        final var jei = Internal.getRuntime();
+        if (jei.isEmpty()) {
             MSRClient.LOGGER.warn("Unable to get JEI item >> JEI Runtime Loss");
             return;
         }
         try {
             final var ingredientType = Internal.getRegisteredIngredients().getIngredientType(ItemStack.class);
-            Internal.getRuntime().ifPresent(r -> {
-                CoreService.tryOpen(r.getIngredientListOverlay().getIngredientUnderMouse(ingredientType));
-            });
+            CoreService.tryOpen(jei.get().getIngredientListOverlay().getIngredientUnderMouse(ingredientType));
         } catch (Throwable ex) {
             MSRClient.LOGGER.warn("Unable to get JEI item >> Exception Caught", ex);
         }
