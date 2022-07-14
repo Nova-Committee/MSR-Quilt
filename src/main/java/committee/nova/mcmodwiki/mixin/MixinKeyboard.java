@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static committee.nova.mcmodwiki.MSRClient.keyBind;
-import static committee.nova.mcmodwiki.MSRClient.openScreen;
+import static committee.nova.mcmodwiki.utils.Utilities.openScreen;
 
 @Mixin(Keyboard.class)
 public abstract class MixinKeyboard {
