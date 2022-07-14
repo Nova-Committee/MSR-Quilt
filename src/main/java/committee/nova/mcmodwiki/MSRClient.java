@@ -5,7 +5,6 @@ import committee.nova.mcmodwiki.core.CoreService;
 import committee.nova.mcmodwiki.mixin.HandledScreenAccessor;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.option.KeyBind;
 import org.lwjgl.glfw.GLFW;
@@ -26,34 +25,16 @@ public class MSRClient implements ClientModInitializer {
                 GLFW.GLFW_KEY_I,
                 "category.msr"
         ));
-        //ClientTickEvents.END.register(client -> {
-        //    if (!keyBind.isPressed()) return;
-        //    openScreen();
-        //});
-
     }
 
     public static void openScreen() {
-        Screen screen = MinecraftClient.getInstance().currentScreen;
+        final var screen = MinecraftClient.getInstance().currentScreen;
         if (screen instanceof HandledScreen gui) {
-            System.out.println(2);
             final var slot = ((HandledScreenAccessor) gui).getFocusedSlot();
             if (slot != null) {
                 final var itemStack = slot.getStack();
                 if (!itemStack.isEmpty()) CoreService.tryOpen(itemStack);
             }
         }
-
-        //if (ModList.get().isLoaded("jei")) {
-        //    if (Internal.getRuntime() != null)
-        //        try {
-        //            IIngredientType<ItemStack> ingredientType = Internal.getRegisteredIngredients().getIngredientType(ItemStack.class);
-        //            FocusFactory factory = new FocusFactory(Internal.getRegisteredIngredients());
-        //            ItemStack stack = Internal.getRuntime().getIngredientListOverlay().getIngredientUnderMouse(ingredientType);
-        //            CoreService.tryOpen(stack);
-        //        } catch (Throwable ex) {
-        //            Static.LOGGER.warn("Unable to get JEI item.", ex);
-        //        }
-        //}
     }
 }
