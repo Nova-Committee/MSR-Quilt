@@ -17,7 +17,6 @@ public abstract class MixinKeyboard {
     public void keyPressed(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         final var pressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyBind.getDefaultKey().getCode());
         if (!pressed) return;
-        System.out.println(1);
         openScreen();
     }
 }
