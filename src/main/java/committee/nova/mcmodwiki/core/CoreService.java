@@ -20,7 +20,7 @@ public class CoreService {
 
     public static boolean tryOpen(ItemStack stack) {
         String modName, regName, displayName, url;
-        int metadata, mcModApiNum;
+        int mcModApiNum;
 
         // 先进行字符获取与转义
         try {
